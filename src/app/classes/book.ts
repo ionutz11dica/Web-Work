@@ -5,7 +5,7 @@ export interface Book {
     _pageCount:number;
     _publisher:string;
     _publishedDate:Date;
-    _imageLink:ImageBitmap;
+    // _imageLink:ImageBitmap;
     _isEbook:boolean;
     _publicDomain: boolean;
    

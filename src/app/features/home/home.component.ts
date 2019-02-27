@@ -26,7 +26,18 @@ export class HomeComponent implements OnInit {
           console.log(data['items'].length)
           let body = JSON.stringify(data)
           for(let i = 0; i < data['items'].length; i++){
-            this.books[i]._id = data['items'][i]['id'];
+            // this.books[i]._id = data['items'][i]['id'];
+            this.books.push({
+              _id: data['items'][i]['id'],
+              _titleBook: 'Harry Potter',
+              _authors: ['J.K Rowling'],
+              _pageCount: 431,
+              _publisher: 'Cucurigu',
+              _publishedDate: new Date(),
+              // _imageLink:ImageBitmap,
+              _isEbook: true,
+              _publicDomain: true
+          })
             
           }
 
