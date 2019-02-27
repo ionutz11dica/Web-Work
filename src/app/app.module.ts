@@ -8,6 +8,9 @@ import { HomeComponent } from './features/home/home.component';
 import { SearchComponent } from './features/search/search.component';
 
 import { ConfigService } from './features/services/config.service';
+import { FilterPipe } from './features/search/filter.pipe';
+
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -15,12 +18,14 @@ import { ConfigService } from './features/services/config.service';
   declarations: [
     AppComponent,
     HomeComponent,
-    SearchComponent
+    SearchComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [ConfigService],
   bootstrap: [AppComponent]

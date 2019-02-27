@@ -1,3 +1,7 @@
-<p>
-  search works!
-</p>
+<div class="md-form">
+  <input type="search" [(ngModel)]="searchText" placeholder="Search Book">
+</div>
+<ul *ngFor="let data of dataset | filter: searchText">
+  <li>{{data}}</li>
+</ul>
+
