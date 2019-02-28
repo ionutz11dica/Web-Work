@@ -3,9 +3,10 @@ export interface Book {
     _titleBook: string;
     _authors: Array<string>;
     _pageCount:number;
+    _description:string;
     _publisher:string;
-    _publishedDate:Date;
-    // _imageLink:ImageBitmap;
+    _publishedDate:string | number;
+    _imageLink:ImageBitmap;
     _isEbook:boolean;
     _publicDomain: boolean;
    

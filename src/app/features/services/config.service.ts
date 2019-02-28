@@ -10,15 +10,16 @@ import { Book } from '../../classes/book'
 })
 export class ConfigService {
   private apiKey = environment.apiKey;
+  private maxResults = "&maxResults=40&startIndex=0"
 
   constructor(private http: HttpClient) { }
 
-  getSearch (searchQuery: string) {
+  getSearch (searchQuery: string) : Observable<any> {
     return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + ":keyes&key=" + this.apiKey);
   }
 
-  getBooks(){
-    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + ":keyes&key=" + this.apiKey);
+  getBooks() : Observable<any> {
+    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + ":keyes"+this.maxResults+"&key=" + this.apiKey);
   }
 
 }

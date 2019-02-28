@@ -11,7 +11,9 @@ import { ConfigService } from './features/services/config.service';
 import { FilterPipe } from './features/search/filter.pipe';
 
 import { FormsModule } from '@angular/forms';
-
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { TruncatePipe } from './features/pipes/truncate.pipe';
 
 
 @NgModule({
@@ -19,13 +21,16 @@ import { FormsModule } from '@angular/forms';
     AppComponent,
     HomeComponent,
     SearchComponent,
-    FilterPipe
+    FilterPipe,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CardModule,
+    ButtonModule
   ],
   providers: [ConfigService],
   bootstrap: [AppComponent]
