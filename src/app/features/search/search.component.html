@@ -1,7 +1,19 @@
-<div class="md-form">
+<!-- <div class="md-form">
   <input type="search" [(ngModel)]="searchText" placeholder="Search Book">
-</div>
+</div> -->
 <!-- <ul *ngFor="let book of books | filter: searchText">
   <li>{{data}}</li>
 </ul> -->
 
+<div class="container">
+  <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div id="wrap">
+              <form action="" autocomplete="on">
+                  <input id="search" name="search" type="text" placeholder="What're we looking for ?" [(ngModel)]="searchText">
+                  <input id="search_submit" value="Rechercher" type="submit">
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

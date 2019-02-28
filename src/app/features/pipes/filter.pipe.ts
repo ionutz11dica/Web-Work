@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Book } from '../../classes/book'
 
 @Pipe({
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(items: any[], searchText: string): any[] {
+  transform(items: Array<Book>, searchText: string): any[] {
     if(!items){
       return [];
     }
@@ -16,7 +17,7 @@ export class FilterPipe implements PipeTransform {
 
     return items.filter(it=>{
       //return items.filter(it => it.indexOf(searchText) !== -1)
-      return it.toLocaleLowerCase().includes(searchText)
+      return it._titleBook.toLocaleLowerCase().includes(searchText)
     });
   }
 

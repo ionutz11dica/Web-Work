@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ConfigService } from '../services/config.service'
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { Book } from 'src/app/classes/book';
-import { HomeComponent } from '../home/home.component';
+import { ConfigService } from '../services/config.service';
+
 
 
 @Component({
@@ -18,18 +16,25 @@ export class SearchComponent implements OnInit {
   dataset = ["adev"];
   booksQuery: string = "Harry Potter";
   booksData:Array<Book>=[];
-  @Input()  books : Array<Book>
   //this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + this.booksQuery + ":keyes&key=" + this.apiKey);
-  constructor() { 
-    
-    
-    //this.booksData= home.books
-    
+  constructor(private config : ConfigService) { 
+  }
+
+  searchToggle(obj, evt) :void {
+    var container = obj.closest('.search-wrapper');
+        if(!container.hasClass('active')){
+            container.addClass('active');
+            evt.preventDefault();
+        }
+        else if(container.hasClass('active') && obj.closest('.input-holder').length == 0){
+            container.removeClass('active');
+            // clear input
+            container.find('.search-input').val('');
+        }
   }
 
   ngOnInit() {
     console.log("ceva mare")
-    console.log(this.books)
     // this.config.getBooks().subscribe(data=>{
     //   var test = data[0]
     //    this.dataset.push(JSON.stringify(data))
@@ -38,5 +43,6 @@ export class SearchComponent implements OnInit {
     //    console.log(this.book._authors)
     // })
   }
+
 
 }

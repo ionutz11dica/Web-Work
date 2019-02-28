@@ -8,7 +8,7 @@ import { HomeComponent } from './features/home/home.component';
 import { SearchComponent } from './features/search/search.component';
 
 import { ConfigService } from './features/services/config.service';
-import { FilterPipe } from './features/search/filter.pipe';
+import { FilterPipe } from './features/pipes/filter.pipe';
 
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';

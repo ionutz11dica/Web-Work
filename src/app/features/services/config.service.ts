@@ -11,7 +11,7 @@ import { Book } from '../../classes/book'
 export class ConfigService {
   private apiKey = environment.apiKey;
   private maxResults = "&maxResults=40&startIndex=0"
-
+  // public books: Array<Book>=[];
   constructor(private http: HttpClient) { }
 
   getSearch (searchQuery: string) : Observable<any> {
@@ -19,7 +19,10 @@ export class ConfigService {
   }
 
   getBooks() : Observable<any> {
-    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + ":keyes"+this.maxResults+"&key=" + this.apiKey);
+    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=download=epub+filter=free-ebooks" + ":keyes"+this.maxResults+"&key=" + this.apiKey);
   }
 
+  getCucu(): Observable<any> {
+    return this.http.get("http://localhost:4000/cucurigu");
+  }
 }
