@@ -14,6 +14,11 @@ import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TruncatePipe } from './features/pipes/truncate.pipe';
+import { DetailsComponent } from './features/details/details.component';
+
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './features/store/reducers/search.reducer';
+
 
 
 @NgModule({
@@ -22,7 +27,8 @@ import { TruncatePipe } from './features/pipes/truncate.pipe';
     HomeComponent,
     SearchComponent,
     FilterPipe,
-    TruncatePipe
+    TruncatePipe,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +36,10 @@ import { TruncatePipe } from './features/pipes/truncate.pipe';
     HttpClientModule,
     FormsModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    StoreModule.forRoot({
+      search: reducer
+    })
   ],
   providers: [ConfigService],
   bootstrap: [AppComponent]

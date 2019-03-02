@@ -1,6 +1,6 @@
 <div>
     <div class="ui-g">
-        <p-card *ngFor="let book of books | filter : searchText" class="ui-g-3"  [header]="book._titleBook" [subheader]="book._authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+        <p-card *ngFor="let book of books$ | async" class="ui-g-3"  [header]="book._titleBook" [subheader]="book._authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
             <p-header>
                 <img [src]="book._imageLink" src="Card" style = "height: 360px">
             </p-header>
