@@ -41,9 +41,9 @@ export class SearchComponent implements OnInit {
   }
 
   keyUpEnter(event) {
-   this.router.navigate(['/details','book'], {
-     queryParams:{'searchTerm': event.target.value}
-   });
+  //  this.router.navigate(['/details','book'], {
+  //    queryParams:{'searchTerm': event.target.value}
+  //  });
    if(event.target.value) {
     console.log(event.target.value);
     this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
