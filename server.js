@@ -1,25 +1,10 @@
-const express = require('express'),
-path = require('path'),
-bodyParser = require('body-parser'),
-cors = require('cors'),
-mongoose = require('mongoose');
+const http = require('http');
+const api = require('./api')
 
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
-let port = process.env.PORT || 4000;
+const port = process.env.PORT || 4000;
 
-app.use(express.static(path.join(__dirname, "/")));
+const server = http.createServer(api);
 
-app.get('/', function (req, res) {
-  console.log(path.join(__dirname,'/src/index.html'))
-  res.sendFile(path.join(__dirname,'/src/index.html'))
-});
-
-app.get("/cucurigu", (req,res) => {
-  res.status(200).json("BAUBAUBAUABBA")
-});
-
-const server = app.listen(port, function(){
-    console.log('Listening on port ' + port);
-});
+server.listen(port,()=>{
+    console.log('Server listen on port '+port)
+})

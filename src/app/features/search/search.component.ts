@@ -45,11 +45,10 @@ export class SearchComponent implements OnInit {
   //    queryParams:{'searchTerm': event.target.value}
   //  });
    if(event.target.value) {
-    console.log(event.target.value);
     this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
-     this.config.getSearch(event.target.value).subscribe((data) => {
-       console.log(data.items[0]);
-     })
+    //  this.config.getSearch(event.target.value).subscribe((data) => {
+    //    console.log(data.items[0]);
+    //  })
    }else{
      console.warn("null event target value");
    }
@@ -57,7 +56,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ceva mare")
     // this.config.getBooks().subscribe(data=>{
     //   var test = data[0]
     //    this.dataset.push(JSON.stringify(data))

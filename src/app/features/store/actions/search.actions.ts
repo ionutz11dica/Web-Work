@@ -15,7 +15,7 @@ export class KeyUpSearch implements Action {
 export class KeyEnterSearch implements Action {
     readonly type = KEY_ENTER_SEARCH;
 
-    constructor(public payload: string){}
+    constructor(public payload: Book[]){}
 }
 
 export class InitialStateSearch implements Action {
