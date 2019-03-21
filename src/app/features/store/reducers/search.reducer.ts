@@ -6,9 +6,9 @@ import _ from 'lodash'
 export function reducer(state: Book[], action: SearchActions.Actions) {
     switch(action.type) {
         case SearchActions.KEY_UP_SEARCH:
-            return _.filter(state, { '_titleBook' : action.payload});
+            return _.filter(state, { 'title' : action.payload});
         case SearchActions.KEY_ENTER_SEARCH:
-            return _.filter(state, { '_titleBook' : action.payload});
+            return _.filter(state, { 'title' : action.payload});
         case SearchActions.INITIAL_STATE:
             return [...action.payload]
 

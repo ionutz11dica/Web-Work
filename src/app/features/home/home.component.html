@@ -1,14 +1,14 @@
 <div class="ui-g">
-    <p-card *ngFor="let book of books$ | async" class="ui-g-3"  [header]="book._titleBook" [subheader]="book._authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+    <p-card *ngFor="let book of books$  | async"  class="ui-g-3"  [header]="book.title" [subheader]="book.authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
         <p-header>
-            <img [src]="book._imageLink" src="Card" style = "height: 360px">
+            <img [src]="book.imageLink" src="Card" style = "height: 360px">
         </p-header>
         <div>
-            {{book._description | limitToPipe :  190}}
+            {{book.description | limitToPipe :  190}}
         </div> 
     
         <p-footer>
-            <button pButton type="button" label="Add" icon="pi pi-check" style="margin-right: .25em"></button>
+            <button  (click)="saveBook(book)" pButton type="button" label="Add" icon="pi pi-check" style="margin-right: .25em"></button>
             <button pButton type="button" label="Delete" icon="pi pi-times" class="ui-button-danger"></button>
         </p-footer>
     </p-card>

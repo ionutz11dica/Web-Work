@@ -58,17 +58,21 @@ router.get('/:email',(req,res)=>{
 })
 
 router.get('/',(req,res)=>{
-    
-    Review
-    
-    .aggregate(
-        [
-            {$match:{}},
-            {$group:{_id:"$bookId", rating:{$avg:"$rating"}}}
-        ]
-    ).then(result=>{
-        res.status(200).json({reviews: result})
-    })
+    // Review
+    // .aggregate(
+    //     [
+    //         {$match:{}},
+    //         {$group:{_id:"$bookId", rating:{$avg:"$rating"}}}
+    //     ]
+    // ).then(result=>{
+    //     res.status(200).json({reviews: result})
+    // })
+    Review.find()
+        .then(result=>{
+            res.status(200).json(result);
+        }).catch(err=>{
+            res.status(404).json(err);
+        })
 })
 
 

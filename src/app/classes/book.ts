@@ -1,14 +1,20 @@
 export interface Book {
-    _id:string;
-    _titleBook: string;
-    _authors: Array<string>;
-    _pageCount:number;
-    _description:string;
-    _publisher:string;
-    _publishedDate:string | number;
-    _imageLink:ImageBitmap;
-    _isEbook:boolean;
-    _publicDomain: boolean;
+    title: string;
+    authors: Array<string>;
+    pageCount:number;
+    description:string;
+    publisher:string;
+    publishedDate:string | number;
+    imageLink:ImageBitmap;
+    isEbook:boolean;
+    publicDomain: boolean;
+    isAvailableEpub: boolean;
+    downloadLink: string;
+    categories: Array<string>;
+    // identifiers:{
+    //  isbn_13:string,
+    //  isbn_10:string
+    // };
    
 //    constructor(id:string,title:string,authors:Array<string>,pageCount:number,publisher:string,publishedDate:Date,
 //     imageLink:ImageBitmap,isEbook:boolean,publcDomain:boolean){

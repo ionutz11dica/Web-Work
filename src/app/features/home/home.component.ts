@@ -43,27 +43,34 @@ export class HomeComponent implements OnInit {
               srcImage = "https://islandpress.org/sites/default/files/400px%20x%20600px-r01BookNotPictured.jpg";
             }
           this.bookAPI.push({
-            _id: data.items[i].id,
-            _titleBook: data.items[i].volumeInfo.title,
-            _authors: data.items[i].volumeInfo.authors,
-            _description: data.items[i].volumeInfo.description,
-            _pageCount: data.items[i].volumeInfo.pageCount,
-            _publisher: data.items[i].volumeInfo.publisher,
-            _publishedDate: data.items[i].volumeInfo.publishedDate,
-            _imageLink: srcImage,
-            _isEbook: data.items[i].saleInfo.isEbook,
-            _publicDomain: data.items[i].accessInfo.publicDomain
+            title: data.items[i].volumeInfo.title,
+            authors: data.items[i].volumeInfo.authors,
+            description: data.items[i].volumeInfo.description,
+            pageCount: data.items[i].volumeInfo.pageCount,
+            publisher: data.items[i].volumeInfo.publisher,
+            publishedDate: data.items[i].volumeInfo.publishedDate,
+            imageLink: srcImage,
+            isEbook: data.items[i].saleInfo.isEbook,
+            publicDomain: data.items[i].accessInfo.publicDomain,
+            isAvailableEpub: data.items[i].accessInfo.epub.isAvailable,
+            downloadLink:data.items[i].accessInfo.epub.downloadLink,
+            categories: data.items[i].volumeInfo.categories
+           
           });
         }
       this.store.dispatch(new SearchActions.InitialStateSearch(this.bookAPI));
       this.books$ = this.store.select('search');
     });
   }
+
+  saveBook(book): void {
+    console.log(book)
+    this.config.addBook(book).subscribe(result=>{
+      console.log(JSON.stringify(result))
+    });
+  }
   ngOnInit() {
     this.getInitialState();
 
-    this.config.getCucu()
-    .subscribe((data) => {
-    })
   }
 }

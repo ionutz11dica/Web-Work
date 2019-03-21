@@ -84,22 +84,57 @@ router.get('/:email',(req,res,next) =>{
 
 
 
-router.post('/',(req,res,next) =>{
-    const user = new User(req.body);
-    user.save()
-        .then(result =>{
-        console.log(result);
-        res.status(200).json({
-            message:"merge POST request to /users",
-            createdUser: result
+router.post('/add',async(req,res,next) =>{
+    User.findOne({email:req.body.email})
+        .then(resulter=>{
+            if(resulter){
+                res.status(400).json('This user already exists');
+            }else{
+                const user = new User(req.body);
+                user.save()
+                    .then(result =>{
+                    res.status(201).send(result)
+                })
+            }
         })
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).json({error:err});
-    });
-    
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error:err});
+        });
 })
+
+router.post('/login',async(req,res,next) =>{
+    User.findOne({$or: [
+                    {username:req.body.username, password:req.body.password},
+                    {email:req.body.email}
+                ]})
+        .then(resulter=>{
+            if(resulter){
+                res.status(200).json(resulter);
+            }else{
+                if(req.body.email){
+                    const user = new User({
+                        email:req.body.email
+                    })
+                    user.save()
+                        .then(userResult=>{
+                            res.status(201).json(userResult)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                            res.status(500).json({error:err});
+                        });
+                }else{
+                    res.status(404).json("That user doesn't exists");
+                }
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(500).json({error:err});
+        });
+})
+
 
 router.put('/:bookId/:email',(req,res,next) =>{
     Book.findById(req.params.bookId)

@@ -17,7 +17,7 @@ export class FilterPipe implements PipeTransform {
 
     return items.filter(it=>{
       //return items.filter(it => it.indexOf(searchText) !== -1)
-      return it._titleBook.toLocaleLowerCase().includes(searchText)
+      return it.title.toLocaleLowerCase().includes(searchText)
     });
   }
 
