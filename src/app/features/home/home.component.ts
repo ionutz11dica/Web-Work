@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
               srcImage = "https://islandpress.org/sites/default/files/400px%20x%20600px-r01BookNotPictured.jpg";
             }
           this.bookAPI.push({
+            id: data.items[i].id,
             title: data.items[i].volumeInfo.title,
             authors: data.items[i].volumeInfo.authors,
             description: data.items[i].volumeInfo.description,

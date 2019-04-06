@@ -30,6 +30,9 @@ export class ConfigService {
   addBook(book:Book): Observable<Book>{
       return this.http.post<Book>("http://localhost:4000/books/add",book,this.httpOptions);
   }
+  getBookDetail(id) : Observable<any> {
+    return this.http.get("https://www.googleapis.com/books/v1/volumes/" + id + "?key=" + this.apiKey);
+  }
   
 }
 

@@ -1,7 +1,7 @@
 <div class="ui-g">
     <p-card *ngFor="let book of books$  | async"  class="ui-g-3"  [header]="book.title" [subheader]="book.authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
         <p-header>
-            <img [src]="book.imageLink" src="Card" style = "height: 360px">
+            <a href="#/details/{{book.id}}"><img [src]="book.imageLink" src="Card" style = "height: 360px"></a>
         </p-header>
         <div>
             {{book.description | limitToPipe :  190}}
