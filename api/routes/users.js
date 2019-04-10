@@ -84,7 +84,7 @@ router.get('/:email',(req,res,next) =>{
 
 
 
-router.post('/add',async(req,res,next) =>{
+router.post('/add',(req,res,next) =>{
     User.findOne({email:req.body.email})
         .then(resulter=>{
             if(resulter){
@@ -103,19 +103,35 @@ router.post('/add',async(req,res,next) =>{
         });
 })
 
-router.post('/login',async(req,res,next) =>{
+router.post('/login',(req,res,next) =>{
     User.findOne({$or: [
                     {username:req.body.username, password:req.body.password},
                     {email:req.body.email}
                 ]})
         .then(resulter=>{
             if(resulter){
-                res.status(200).json(resulter);
+                if(resulter.email === req.body.email || (resulter.username === req.body.username && resulter !== null && 
+                    resulter.password === req.body.password && req.body.password !== null)){
+                        res.status(200).json(resulter);
+                }else{
+                    
+                    if(req.body.email){
+                        const user = new User(req.body)
+                        user.save()
+                            .then(userResult=>{
+                                res.status(201).json(userResult)
+                            })
+                            .catch(err => {
+                                console.log(err)
+                                res.status(500).json({error:err});
+                            });
+                    }else{
+                        res.status(400).json("That user doesn't exists");
+                    }
+                }
             }else{
                 if(req.body.email){
-                    const user = new User({
-                        email:req.body.email
-                    })
+                    const user = new User(req.body)
                     user.save()
                         .then(userResult=>{
                             res.status(201).json(userResult)
@@ -160,7 +176,7 @@ router.patch('/:email/:bookId',(req,res,next) =>{
             .where({email:req.params.email})
             .update({$pull:{books:book._id}})
             .then(result=>{
-                res.status(202).json({message:"User delete a book"})
+                res.status(202).json({message:"User has been deleted a book"})
             })
             .catch(err=>{
                 res.status(404).json({message:"Error, user not found"})                
