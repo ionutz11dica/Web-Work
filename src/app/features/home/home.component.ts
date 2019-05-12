@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
 
   saveBook(book): void {
     console.log(book)
-    this.config.addBook(book).subscribe(result=>{
+    this.config.addBook(book,null).subscribe(result=>{
       console.log(JSON.stringify(result))
     });
   }

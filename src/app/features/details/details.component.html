@@ -1,3 +1,9 @@
-<p>
-  details works!
-</p>
+<!-- <form #myForm="ngForm" enctype="multipart/form-data" (ngSubmit)="uploadFile(myForm)">
+    <p-button label="Submit" type="submit"></p-button>
+</form> -->
+
+<p-fileUpload mode="basic" name="epubFile" url="http://localhost:4000/books/uploadFile" 
+              accept=".epub" (uploadHandler)="myUploader($event)" (onUpload)="beforeUpload($event)"
+              >
+</p-fileUpload>
+    

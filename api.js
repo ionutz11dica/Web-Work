@@ -3,6 +3,8 @@ const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const cors = require('cors');
+app.use(cors());
 
 const usersRoutes = require('./api/routes/users');
 const booksRoutes = require('./api/routes/books');
@@ -30,12 +32,19 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 app.use((req,res,next)=>{
-    res.setHeader('Access-Control-Allow-Origin','http://localhost:4200');
+    res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader("Access-Control-Allow-Headers", "Origin, Accept,Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-    res.setHeader('Access-Control-Allow-Credentials',true);
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader('Access-Control-Allow-Credentials', true);
     next();
   })
+
+//   app.all("/*", function(req, res, next){
+//     res.header('Access-Control-Allow-Origin', '*');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+//     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+//     next();
+//   });
 
 app.use('/users', usersRoutes);
 app.use('/books', booksRoutes);

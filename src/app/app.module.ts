@@ -20,6 +20,8 @@ import { DetailsComponent } from './features/details/details.component';
 import { StoreModule } from '@ngrx/store';
 import { reducer } from './features/store/reducers/search.reducer';
 
+import {FileUploadModule} from 'primeng/fileupload';
+
 
 
 @NgModule({
@@ -39,6 +41,7 @@ import { reducer } from './features/store/reducers/search.reducer';
     FormsModule,
     CardModule,
     ButtonModule,
+    FileUploadModule,
     StoreModule.forRoot({
       search: reducer
     })
