@@ -98,22 +98,20 @@ router.get('/files', (req, res) => {
   });
 
 router.post('/uploadFile', upload.single('epubFile'), function (req, res, next) {
-      res.send(req.file);
+    console.log(req)
+    res.send(req.file);
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
 })
 
 
-router.post('/addFile/:name', (req,res)=> {
+router.post('/addFile', upload.single('epubFile'), (req,res)=> {
     console.log(req)
-    if(req.book.title){
-
-    }
     //se primeste doar req.file .body este gol
-    Book.findOne({title:req.body.book.title})
+    Book.findOne({title:req.body.title})
         .then(result=>{
             if(result){
-                gfs.remove({filename: req.params.name, root:'contents'},(err,gridStore)=>{
+                gfs.remove({filename: req.body.title, root:'contents'},(err,gridStore)=>{
                     if(err){
                         res.status(404).json({message:"Nu e nimic de sters"})
                     }else{
@@ -122,7 +120,7 @@ router.post('/addFile/:name', (req,res)=> {
                 })
                 res.status(404).json({message:'Book already exists'})
             } else {
-                    const book = new Book(req.body.book);
+                    const book = new Book(req.body);
                     book["fileID"] = req.body.epubFile.name;
                     console.log("spanac"+book["fileID"])
                     book.save()

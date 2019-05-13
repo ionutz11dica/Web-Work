@@ -16,9 +16,9 @@ export class ConfigService {
   private apiKey = environment.apiKey;
   private maxResults = "&maxResults=40&startIndex=0"
   
-//   httpOptions = {
-//    headers: new HttpHeaders({'Content-Type': 'application/json'})
-//  };
+  httpOptions = {
+   headers: new HttpHeaders({'Content-Type': 'multipart/form-data'})
+ };
   // public books: Array<Book>=[];
   constructor(private http: HttpClient) { }
 
@@ -31,8 +31,11 @@ export class ConfigService {
   addBook(book:Book, name): Observable<Book>{
       return this.http.post<Book>("http://localhost:4000/books/addFile/" + name, book);
   }
-  uploadFile(file:File): Observable<any>{
-      return this.http.post("http://localhost:4000/uploadFile/", file);
+  addBook1(formData): Observable<any>{
+      return this.http.post<Book>("http://localhost:4000/books/addFile/", formData);
+  }
+  uploadFile(formData: FormData): Observable<any>{
+      return this.http.post("http://localhost:4000/books/uploadFile", formData);
   }
   getBookDetail(id) : Observable<any> {
     return this.http.get("https://www.googleapis.com/books/v1/volumes/" + id + "?key=" + this.apiKey);

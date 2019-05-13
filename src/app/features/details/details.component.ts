@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfigService } from '../services/config.service';
 import { Book } from 'src/app/classes/book';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
@@ -12,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class DetailsComponent implements OnInit {
 
   epubFile: File;
+  formData: FormData;
 
   constructor(private route: ActivatedRoute, private config: ConfigService, private http: HttpClient) { }
 
@@ -21,58 +23,18 @@ export class DetailsComponent implements OnInit {
     .subscribe(data => console.log(data)); 
   }
 
-  // myUploader(event) {
-
-  //   this.epubFile = event.files[0];
-  //   const formData: FormData = new FormData();
-  //   formData.append('file', this.epubFile, this.epubFile.name );
-  //   var book: Book;
-  //   this.config.uploadFile(this.epubFile)
-  //   .subscribe(result => {
-  //     console.log(result)
-  //     if(result) {
-  //       book = {
-  //         id: result.file.id,
-  //         title: event.files[0].name, 
-  //         authors: null,
-  //         pageCount:null,
-  //         description:null,
-  //         publisher:null,
-  //         publishedDate:null,
-  //         imageLink:null,
-  //         isEbook:null,
-  //         publicDomain: null,
-  //         isAvailableEpub: null,
-  //         downloadLink: null,
-  //         categories: null    
-  //       }
-        
-  //     }
-  //   });
-    
-  // }
-
-  beforeUpload(event){
-    var book: Book;
-    book = {
-      id: event.file.id,
-      title: event.files[0].name, 
-      authors: null,
-      pageCount:null,
-      description:null,
-      publisher:null,
-      publishedDate:null,
-      imageLink:null,
-      isEbook:null,
-      publicDomain: null,
-      isAvailableEpub: null,
-      downloadLink: null,
-      categories: null    
-    }
-    this.config.addBook(book, event.file.originalName)
+  myUploader(event) {
+    this.epubFile = event.files[0];
+    const formData: FormData = new FormData();
+    var book: Book;      
+    formData.append('epubFile', this.epubFile, this.epubFile.name);
+    formData.append('title', 'Test');
+    formData.append('authors', 'Test');
+    formData.append('pageCount', 'Test');
+    this.config.addBook1(formData)
+    .subscribe(result => {
+      console.log(result)
+      
+    });    
   }
-  uploadFile(form){
-    console.log(form);
-  }
-
 }
