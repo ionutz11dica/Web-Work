@@ -11,7 +11,8 @@ import { SearchComponent } from './features/search/search.component';
 import { ConfigService } from './features/services/config.service';
 import { FilterPipe } from './features/pipes/filter.pipe';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TruncatePipe } from './features/pipes/truncate.pipe';
@@ -21,6 +22,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducer } from './features/store/reducers/search.reducer';
 
 import {FileUploadModule} from 'primeng/fileupload';
+import {InputTextModule} from 'primeng/inputtext';
+
 
 
 
@@ -42,6 +45,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     CardModule,
     ButtonModule,
     FileUploadModule,
+    InputTextModule,
+    ReactiveFormsModule,
     StoreModule.forRoot({
       search: reducer
     })

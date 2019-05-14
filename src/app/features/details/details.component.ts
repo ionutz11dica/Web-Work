@@ -14,8 +14,17 @@ export class DetailsComponent implements OnInit {
 
   epubFile: File;
   formData: FormData;
+  addBookForm: FormGroup;
 
-  constructor(private route: ActivatedRoute, private config: ConfigService, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private config: ConfigService,
+              private fb: FormBuilder, private http: HttpClient) {    
+    this.addBookForm = this.fb.group({
+      title: ['', [<any>Validators.required]],
+      authors: ['', [<any>Validators.required]],
+      pageCount: ['', [<any>Validators.required]],
+      imageLink: ['', [<any>Validators.required]]
+    });
+   }
 
   ngOnInit() {
     console.log(this.route.snapshot.params.id);
@@ -24,17 +33,17 @@ export class DetailsComponent implements OnInit {
   }
 
   myUploader(event) {
+    const payload = this.addBookForm.getRawValue();
     this.epubFile = event.files[0];
     const formData: FormData = new FormData();
     var book: Book;      
     formData.append('epubFile', this.epubFile, this.epubFile.name);
-    formData.append('title', 'Test');
-    formData.append('authors', 'Test');
-    formData.append('pageCount', 'Test');
+    formData.append('title', payload.title);
+    formData.append('authors', payload.authors);
+    formData.append('pageCount', payload.pageCount);
     this.config.addBook1(formData)
     .subscribe(result => {
-      console.log(result)
-      
+      console.log(result)      
     });    
   }
 }

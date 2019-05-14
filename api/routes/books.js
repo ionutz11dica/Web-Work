@@ -121,7 +121,7 @@ router.post('/addFile', upload.single('epubFile'), (req,res)=> {
                 res.status(404).json({message:'Book already exists'})
             } else {
                     const book = new Book(req.body);
-                    book["fileID"] = req.body.epubFile.name;
+                    book["fileID"] = req.file.id;
                     console.log("spanac"+book["fileID"])
                     book.save()
                         .then(result => {

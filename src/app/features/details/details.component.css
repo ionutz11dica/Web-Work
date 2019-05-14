@@ -1,0 +1,12 @@
+.detail-container {
+    text-align: center;
+}
+.detail-form {
+    display: inline-block;
+}
+.text-input {
+    width: 300px;
+}
+.file-upload.ui-button{
+    width: 300px;
+}

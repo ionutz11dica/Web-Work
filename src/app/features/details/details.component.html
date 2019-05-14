@@ -1,8 +1,29 @@
-<form #form="ngForm" enctype="multipart/form-data">
-    <input type="text" name="title"/>
-    <input type="text" name="authors"/>
-    <input type="text" name="pageCount"/>]
-    <p-fileUpload mode="basic" name="epubFile" accept=".epub" 
-              customUpload="true" (uploadHandler)="myUploader($event)">
-    </p-fileUpload>
-</form>
+<div class="detail-container">
+    <div class="detail-form">
+        <form #form="ngForm" [formGroup]="addBookForm" enctype="multipart/form-data">
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-book"></i></span>   
+                <input type="text" formControlName="title" pInputText  placeholder="Title" class="text-input"/>
+            </div>
+            <br/>
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-users"></i></span> 
+                <input type="text" formControlName="authors" pInputText placeholder="Authors" class="text-input"/>
+            </div>
+            <br/>
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-file"></i></span> 
+                <input type="text" formControlName="pageCount" pInputText placeholder="Page Count" class="text-input"/>
+            </div>
+            <br/>
+            <div class="ui-inputgroup">
+                <span class="ui-inputgroup-addon"><i class="fa fa-picture-o"></i></span> 
+                <input type="text" formControlName="imageLink" pInputText placeholder="Image link" class="text-input"/>
+            </div>
+            <br/>
+            <p-fileUpload mode="basic" name="epubFile" accept=".epub" [disabled]="!addBookForm.valid"
+                    customUpload="true" (uploadHandler)="myUploader($event)" styleClass="file-upload">
+            </p-fileUpload>
+        </form>
+    </div>
+</div>
