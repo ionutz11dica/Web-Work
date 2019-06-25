@@ -1,5 +1,6 @@
 <div class="ui-g">
-    <p-card *ngFor="let book of books$  | async"  class="ui-g-3"  [header]="book.title" [subheader]="book.authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+        <!-- $  | async -->
+    <p-card *ngFor="let book of books"  class="ui-g-3"  [header]="book.title" [subheader]="book.authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
         <p-header>
             <a href="#/details/{{book.id}}"><img [src]="book.imageLink" src="Card" style = "height: 360px"></a>
         </p-header>
@@ -8,8 +9,8 @@
         </div> 
     
         <p-footer>
-            <button  (click)="saveBook(book)" pButton type="button" label="Add" icon="pi pi-check" style="margin-right: .25em"></button>
-            <button pButton type="button" label="Delete" icon="pi pi-times" class="ui-button-danger"></button>
+            <button  (click)="saveBook(book)" pButton type="button" label="Add book in database" icon="pi pi-check" style="margin-right: .25em"></button>
+            <!-- <button pButton type="button" label="Delete" icon="pi pi-times" class="ui-button-danger"></button> -->
         </p-footer>
     </p-card>
 </div>

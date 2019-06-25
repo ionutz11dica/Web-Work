@@ -15,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import {TabMenuModule} from 'primeng/tabmenu';
+
 import { TruncatePipe } from './features/pipes/truncate.pipe';
 import { DetailsComponent } from './features/details/details.component';
 
@@ -23,6 +25,9 @@ import { reducer } from './features/store/reducers/search.reducer';
 
 import {FileUploadModule} from 'primeng/fileupload';
 import {InputTextModule} from 'primeng/inputtext';
+import { NavbarComponent } from './features/navbar/navbar.component';
+import { EffectsModule } from '@ngrx/effects';
+import { SearchEffects } from './features/store/effects/search.effects';
 
 
 
@@ -34,7 +39,8 @@ import {InputTextModule} from 'primeng/inputtext';
     SearchComponent,
     FilterPipe,
     TruncatePipe,
-    DetailsComponent
+    DetailsComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +50,11 @@ import {InputTextModule} from 'primeng/inputtext';
     FormsModule,
     CardModule,
     ButtonModule,
+    TabMenuModule,
     FileUploadModule,
     InputTextModule,
     ReactiveFormsModule,
+    EffectsModule.forRoot([SearchEffects]),
     StoreModule.forRoot({
       search: reducer
     })

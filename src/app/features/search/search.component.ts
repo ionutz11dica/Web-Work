@@ -5,7 +5,7 @@ import { ConfigService } from '../services/config.service';
 import { Router } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as SearchActions from '../store/actions/search.actions';
 import { Observable } from 'rxjs';
 
@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 })
 export class SearchComponent implements OnInit {
   books:Array<Book>=[];
+  books$: Observable<Book[]>;
   //searchText:string;
   //this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + this.booksQuery + ":keyes&key=" + this.apiKey);
   constructor(private config : ConfigService, 
@@ -46,13 +47,9 @@ export class SearchComponent implements OnInit {
   //  });
    if(event.target.value) {
     this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
-    //  this.config.getSearch(event.target.value).subscribe((data) => {
-    //    console.log(data.items[0]);
-    //  })
    }else{
      console.warn("null event target value");
    }
-
   }
 
   ngOnInit() {

@@ -8,15 +8,33 @@ import { ConfigService } from '../../services/config.service';
 export class SearchEffects {
  
   @Effect()
-  loadSearch$ = this.actions$
+  loadInitialState$ = this.actions$
     .pipe(
-      ofType('[SEARCH] INITIAL STATE'),
+      ofType('[SEARCH] LOAD BOOKS'),
       mergeMap(() => this.searchService.getBooks()
         .pipe(
-          map(search => ({ type: '[SEARCH] INITIAL STATE', payload: search })),
+          map(search => ({ type: '[SEARCH] INITIAL STATE', payload: search.items })),
           catchError(() => EMPTY)
         )
       )
+    );
+
+  @Effect()
+  keyUpSearch$ = this.actions$
+    .pipe(
+      ofType('[SEARCH] KEY UP'),
+      mergeMap((payload:any,idx) => this.searchService.getSearch(payload.payload)
+        .pipe(
+          map(search => 
+            ({ type: '[SEARCH] BOOKS SEARCH SUCCESS', payload: search.items }))
+            ,
+          catchError(() => EMPTY)
+        )
+      )
+      // mergeMap((action) => this.searchService.getSearch(
+      //   action.payload.searchQuery
+      // ))
+      // .map(payload => this.searchService.getSearch(payload))
     );
  
   constructor(

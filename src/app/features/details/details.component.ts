@@ -15,6 +15,8 @@ export class DetailsComponent implements OnInit {
   epubFile: File;
   formData: FormData;
   addBookForm: FormGroup;
+  bookData: any;
+  donwloadUrl: any;
 
   constructor(private route: ActivatedRoute, private config: ConfigService,
               private fb: FormBuilder, private http: HttpClient) {    
@@ -29,7 +31,15 @@ export class DetailsComponent implements OnInit {
   ngOnInit() {
     console.log(this.route.snapshot.params.id);
     this.config.getBookDetail(this.route.snapshot.params.id)
-    .subscribe(data => console.log(data)); 
+    .subscribe(data => {
+      this.bookData = data;
+      this.addBookForm.controls["title"].setValue(this.bookData.volumeInfo.title);
+      this.addBookForm.controls["authors"].setValue(this.bookData.volumeInfo.authors);
+      this.addBookForm.controls["pageCount"].setValue(this.bookData.volumeInfo.pageCount);
+      this.addBookForm.controls["imageLink"].setValue(this.bookData.volumeInfo.imageLinks.medium);
+      this.donwloadUrl = this.bookData.accessInfo.epub.downloadLink;
+      console.log(this.bookData)
+    }); 
   }
 
   myUploader(event) {
@@ -44,6 +54,6 @@ export class DetailsComponent implements OnInit {
     this.config.addBook1(formData)
     .subscribe(result => {
       console.log(result)      
-    });    
+    });
   }
 }

@@ -1,3 +1,7 @@
+<div *ngIf="bookData">
+    Add {{bookData.volumeInfo.title}} book into database 
+</div>
+
 <div class="detail-container">
     <div class="detail-form">
         <form #form="ngForm" [formGroup]="addBookForm" enctype="multipart/form-data">
@@ -17,8 +21,16 @@
             </div>
             <br/>
             <div class="ui-inputgroup">
-                <span class="ui-inputgroup-addon"><i class="fa fa-picture-o"></i></span> 
+                <a target="_blank" [href]="donwloadUrl">
+                    <span class="ui-inputgroup-addon"><i class="fa fa-picture-o"></i></span>
+                </a> 
                 <input type="text" formControlName="imageLink" pInputText placeholder="Image link" class="text-input"/>
+            </div>
+            <br/>
+            <div class="download-button">
+                <a target="_blank" [href]="donwloadUrl">
+                    <button pButton type="button" label="Download Epub"></button>
+                </a> 
             </div>
             <br/>
             <p-fileUpload mode="basic" name="epubFile" accept=".epub" [disabled]="!addBookForm.valid"

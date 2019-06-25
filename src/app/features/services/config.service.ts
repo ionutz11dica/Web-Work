@@ -23,10 +23,10 @@ export class ConfigService {
   constructor(private http: HttpClient) { }
 
   getSearch (searchQuery: string) : Observable<any> {
-    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + "&key=" + this.apiKey);
+    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + "&download=epub&filter=free-ebooks&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
   }
   getBooks() : Observable<any> {
-    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=Romeo&filter=free-ebooks&orderBy=relevance" + ""+this.maxResults+"&key=" + this.apiKey);
+    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=a&download=epub&filter=free-ebooks&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
   }
   addBook(book:Book, name): Observable<Book>{
       return this.http.post<Book>("http://localhost:4000/books/addFile/" + name, book);
