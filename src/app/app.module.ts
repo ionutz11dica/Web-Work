@@ -28,6 +28,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import { NavbarComponent } from './features/navbar/navbar.component';
 import { EffectsModule } from '@ngrx/effects';
 import { SearchEffects } from './features/store/effects/search.effects';
+import { LoginComponent } from './features/login/login.component';
+import { fakeBackendProvider } from './helpers';
 
 
 
@@ -40,7 +42,8 @@ import { SearchEffects } from './features/store/effects/search.effects';
     FilterPipe,
     TruncatePipe,
     DetailsComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,7 @@ import { SearchEffects } from './features/store/effects/search.effects';
       search: reducer
     })
   ],
-  providers: [ConfigService],
+  providers: [ConfigService, fakeBackendProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
