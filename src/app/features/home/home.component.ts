@@ -66,7 +66,8 @@ export class HomeComponent implements OnInit {
           publicDomain: data[i].accessInfo.publicDomain,
           isAvailableEpub: data[i].accessInfo.epub.isAvailable,
           downloadLink:data[i].accessInfo.epub.downloadLink,
-          categories: data[i].volumeInfo.categories           
+          categories: data[i].volumeInfo.categories,
+          isbn: data[i].volumeInfo.industryIdentifiers ? data[i].volumeInfo.industryIdentifiers[0].identifier : ""
         });
       } else 
         break;

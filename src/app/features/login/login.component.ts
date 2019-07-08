@@ -54,7 +54,10 @@ export class LoginComponent implements OnInit {
           .pipe(first())
           .subscribe(
               data => {
-                  this.router.navigate([this.returnUrl]);
+                    this.router.navigateByUrl('/navbar', {skipLocationChange: true}).then(()=>
+                        this.router.navigate([this.returnUrl])
+                    );
+                //   this.router.navigate([this.returnUrl]);
               },
               error => {
                   this.error = error;

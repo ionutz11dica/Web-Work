@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {MenuItem} from 'primeng/api';
 import { AuthenticationService } from 'src/app/helpers';
 import { Router } from '@angular/router';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,8 +16,9 @@ export class NavbarComponent implements OnInit {
   @ViewChild('menuItems') menu: MenuItem[];
   currentUser: any;
   loginVisible: boolean = false;
+  @Input() menuItems;
 
-  constructor ( private router: Router,
+  constructor ( private router: Router, private config: ConfigService,
                 private authenticationService: AuthenticationService
     ) {
       
@@ -27,15 +29,12 @@ export class NavbarComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.items = [
-        {label: 'Home', icon: 'fa fa-fw fa-home', routerLink: ['/']},
-        // {label: 'Statistics', icon: 'fa far fa-chart-bar'},
-        {label: 'Login', icon: 'fa fa-sign-in', visible: this.loginVisible, routerLink: ['/login']},
-        {label: 'Logout', icon: 'fa fa-sign-out', visible: !this.loginVisible, command: (event) => {
-          this.authenticationService.logout();
-          this.router.navigate(['/login']);
-        }}
-    ];
+    this.items = this.config.getMenuItems();
+    // if(this.currentUser){
+    //   this.items.push(
+    //     {label: this.currentUser.username, icon: 'fa fa-user', style: "float: right;", disabled: true, visible: this.loginVisible}
+    //   );
+    // }
     this.activeItem = this.items[0];
   }
 

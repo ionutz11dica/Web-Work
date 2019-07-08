@@ -17,6 +17,7 @@ export class DetailsComponent implements OnInit {
   addBookForm: FormGroup;
   bookData: any;
   donwloadUrl: any;
+  bookTitle;
 
   constructor(private route: ActivatedRoute, private config: ConfigService,
               private fb: FormBuilder, private http: HttpClient) {    
@@ -24,7 +25,8 @@ export class DetailsComponent implements OnInit {
       title: ['', [<any>Validators.required]],
       authors: ['', [<any>Validators.required]],
       pageCount: ['', [<any>Validators.required]],
-      imageLink: ['', [<any>Validators.required]]
+      imageLink: ['', [<any>Validators.required]],
+      isbn: ['', [<any>Validators.required]]
     });
    }
 
@@ -37,7 +39,17 @@ export class DetailsComponent implements OnInit {
       this.addBookForm.controls["authors"].setValue(this.bookData.volumeInfo.authors);
       this.addBookForm.controls["pageCount"].setValue(this.bookData.volumeInfo.pageCount);
       this.addBookForm.controls["imageLink"].setValue(this.bookData.volumeInfo.imageLinks.medium);
+      this.addBookForm.controls["isbn"].setValue("");
+      if(this.bookData.volumeInfo.industryIdentifiers){
+        var isbns = this.bookData.volumeInfo.industryIdentifiers;
+        for(var i=0;i<isbns.length;i++){
+          if(isbns[i].type.toUpperCase() == "ISBN_13"){
+            this.addBookForm.controls["isbn"].setValue(isbns[i].identifier);
+          }
+        }
+      }
       this.donwloadUrl = this.bookData.accessInfo.epub.downloadLink;
+      this.bookTitle = this.bookData.volumeInfo.title;
       console.log(this.bookData)
     }); 
   }
@@ -51,6 +63,7 @@ export class DetailsComponent implements OnInit {
     formData.append('title', payload.title);
     formData.append('authors', payload.authors);
     formData.append('pageCount', payload.pageCount);
+    formData.append('isbn', payload.isbn);
     this.config.addBook1(formData)
     .subscribe(result => {
       console.log(result)      

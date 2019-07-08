@@ -1,0 +1,4 @@
+::ng-deep .app-menu ul li:last-child{
+    float: right!important;
+    opacity: unset;
+}

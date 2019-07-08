@@ -12,6 +12,7 @@ export interface Book {
     isAvailableEpub: boolean;
     downloadLink: string;
     categories: Array<string>;
+    isbn: string;
     // identifiers:{
     //  isbn_13:string,
     //  isbn_10:string
