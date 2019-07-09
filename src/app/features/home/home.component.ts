@@ -87,9 +87,9 @@ export class HomeComponent implements OnInit {
     
     this.store.pipe(select('search'))
       .subscribe((search: any) => {
-        if(search) {
+        if(search && search.toString() !== "") {
           this.initialState = false;
-          this.convertBook(search);
+          this.convertBook(search.books);
           this.books = this.bookAPI;
         }
       });

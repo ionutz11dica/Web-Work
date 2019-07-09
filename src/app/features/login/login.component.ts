@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/helpers';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/state/search.state';
+import * as SearchActions from '../store/actions/search.actions';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +23,8 @@ export class LoginComponent implements OnInit {
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private router: Router,
-      private authenticationService: AuthenticationService
+      private authenticationService: AuthenticationService,
+      private store: Store<AppState>
   ) {
       // redirect to home if already logged in
       if (this.authenticationService.currentUserValue) { 
@@ -54,10 +58,7 @@ export class LoginComponent implements OnInit {
           .pipe(first())
           .subscribe(
               data => {
-                    this.router.navigateByUrl('/navbar', {skipLocationChange: true}).then(()=>
-                        this.router.navigate([this.returnUrl])
-                    );
-                //   this.router.navigate([this.returnUrl]);
+                    this.router.navigate([this.returnUrl])
               },
               error => {
                   this.error = error;

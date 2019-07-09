@@ -7,6 +7,8 @@ export const KEY_ENTER_SEARCH = '[SEARCH] KEY ENTER';
 export const INITIAL_STATE = '[SEARCH] INITIAL STATE';
 export const LOAD_BOOKS = '[SEARCH] LOAD BOOKS';
 export const BOOKS_SEARCH_SUCCESS = '[SEARCH] BOOKS SEARCH SUCCESS';
+export const USER_LOGIN = '[SEARCH] USER LOGIN';
+export const USER_LOGOUT = '[SEARCH] USER LOGOUT';
 
 export class KeyUpSearch implements Action {
     readonly type = KEY_UP_SEARCH;
@@ -38,4 +40,16 @@ export class SearchSuccess implements Action {
     constructor(public payload: Book[]){}
 }
 
-export type Actions = KeyUpSearch | LoadBooksSearch | KeyEnterSearch | InitialStateSearch | SearchSuccess;
+export class UserLogin implements Action {
+    readonly type = USER_LOGIN;
+
+    constructor(public payload: boolean){}
+}
+
+export class UserLogout implements Action {
+    readonly type = USER_LOGOUT;
+
+    constructor(public payload: boolean){}
+}
+
+export type Actions = KeyUpSearch | LoadBooksSearch | KeyEnterSearch | InitialStateSearch | SearchSuccess | UserLogin | UserLogout;

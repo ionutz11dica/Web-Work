@@ -12,4 +12,8 @@ export class TruncatePipe implements PipeTransform {
     }
   }
 
+  // transform(value: any, length: number): string {
+  //   return (value.length()>14)?value.slice(0,length)+'...': value;
+  // }
+
 }

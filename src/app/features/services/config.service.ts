@@ -54,27 +54,25 @@ export class ConfigService {
   getBookDetail(id) : Observable<any> {
     return this.http.get("https://www.googleapis.com/books/v1/volumes/" + id + "?key=" + this.apiKey);
   }
-  getMenuItems(): MenuItem[] {
-    var items: MenuItem[];
-    items = [
-      {label: 'Home', icon: 'fa fa-fw fa-home', routerLink: ['/']},
-      // {label: 'Statistics', icon: 'fa far fa-chart-bar'},
-      {label: 'Login', icon: 'fa fa-sign-in', visible: !this.loginVisible, routerLink: ['/login']},
-      {label: 'Logout', icon: 'fa fa-sign-out', visible: this.loginVisible, command: (event) => {
-        this.authenticationService.logout();
-        this.router.navigateByUrl('/navbar', {skipLocationChange: true}).then(()=>
-          this.router.navigate(["/login"])
-        );
-        // this.router.navigateByUrl('/login');
-        // this.router.navigate(['/login']);
-      }},
-    ];
-    if(this.currentUser) {
-      items.push(
-        {label: this.currentUser.username, icon: 'fa fa-user', disabled: true, visible: this.loginVisible}
-      );
-    }
-    return items;
-  }
+  // getMenuItems(): MenuItem[] {
+  //   var items: MenuItem[];
+  //   items = [
+  //     {label: 'Home', icon: 'fa fa-fw fa-home', routerLink: ['/']},
+  //     // {label: 'Statistics', icon: 'fa far fa-chart-bar'},
+  //     {label: 'Login', icon: 'fa fa-sign-in', visible: !this.loginVisible, routerLink: ['/login']},
+  //     {label: 'Logout', icon: 'fa fa-sign-out', visible: this.loginVisible, command: (event) => {
+  //       this.authenticationService.logout();
+  //       this.router.navigateByUrl('/navbar', {skipLocationChange: true}).then(()=>
+  //         this.router.navigate(["/login"])
+  //       );
+  //     }},
+  //   ];
+  //   if(this.currentUser) {
+  //     items.push(
+  //       {label: this.currentUser.username, icon: 'fa fa-user', disabled: true, visible: this.loginVisible}
+  //     );
+  //   }
+  //   return items;
+  // }
   
 }

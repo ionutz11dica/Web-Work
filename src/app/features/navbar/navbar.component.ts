@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { AuthenticationService } from 'src/app/helpers';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 import { ConfigService } from '../services/config.service';
+import { select, Store } from '@ngrx/store';
+import { AppState } from '../store/state/search.state';
+import * as SearchActions from '../store/actions/search.actions';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-navbar',
@@ -16,10 +20,9 @@ export class NavbarComponent implements OnInit {
   @ViewChild('menuItems') menu: MenuItem[];
   currentUser: any;
   loginVisible: boolean = false;
-  @Input() menuItems;
 
   constructor ( private router: Router, private config: ConfigService,
-                private authenticationService: AuthenticationService
+                private authenticationService: AuthenticationService, private store: Store<AppState>
     ) {
       
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
@@ -29,17 +32,43 @@ export class NavbarComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.items = this.config.getMenuItems();
-    // if(this.currentUser){
-    //   this.items.push(
-    //     {label: this.currentUser.username, icon: 'fa fa-user', style: "float: right;", disabled: true, visible: this.loginVisible}
-    //   );
-    // }
-    this.activeItem = this.items[0];
+    this.store.pipe(select('search'))
+      .subscribe((search: any) => {
+        if(search) {
+          if(search.userLogged){
+            this.loginVisible = true;
+          } else {
+            this.loginVisible = false;
+          }
+        }
+      });
   }
 
   activateMenu() {
     this.activeItem = this.menu['activeItem'];
+  }
+
+  logout(){
+    this.authenticationService.logout();
+    this.router.navigate(["/login"], {queryParams: {returnUrl: "#/login"}});
+    this.router.navigateByUrl('/login');
+  }
+
+  
+  keyUpEnter(event) {
+    if(event.target.value) {
+      this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
+    }else{
+      console.warn("null event target value");
+    }
+  }
+
+  search(query){
+    if(query){
+      this.store.dispatch(new SearchActions.KeyUpSearch(query));
+    }else{
+      console.warn("null event target value");
+    }
   }
 
 }

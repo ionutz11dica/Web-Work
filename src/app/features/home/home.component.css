@@ -1,0 +1,10 @@
+::ng-deep .app-book-card > .ui-card .ui-card-body .ui-card-title {
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical; 
+    /* autoprefixer: on */
+    display: block;
+    display: -webkit-box !important;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+}

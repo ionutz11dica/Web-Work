@@ -42,9 +42,6 @@ export class SearchComponent implements OnInit {
   }
 
   keyUpEnter(event) {
-  //  this.router.navigate(['/details','book'], {
-  //    queryParams:{'searchTerm': event.target.value}
-  //  });
    if(event.target.value) {
     this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
    }else{
@@ -53,13 +50,6 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.config.getBooks().subscribe(data=>{
-    //   var test = data[0]
-    //    this.dataset.push(JSON.stringify(data))
-    //    console.log(test)
-    //    this.book._authors= test['authors']
-    //    console.log(this.book._authors)
-    // })
   }
 
 

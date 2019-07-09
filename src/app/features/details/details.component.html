@@ -3,7 +3,7 @@
         <div class="text-center col-6" *ngIf="bookData">
             <img [src]="bookData.volumeInfo.imageLinks.medium" style="width:300px; height:300px;">
             <br/>
-            <p>{{bookData.volumeInfo.description}}</p>
+            <p [innerHtml]="bookData.volumeInfo.description"></p>
         </div>
         
         <div class="text-center col-6 detail-container">
