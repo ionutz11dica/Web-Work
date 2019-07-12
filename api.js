@@ -9,6 +9,7 @@ app.use(cors());
 const usersRoutes = require('./api/routes/users');
 const booksRoutes = require('./api/routes/books');
 const reviewsRoutes = require('./api/routes/reviews');
+const adminRoutes = require('./api/routes/admins');
 
 const mongoURL ='mongodb://books:'+ process.env.MONGOLAB_PW +'@ds049219.mlab.com:49219/licenta2019';
 
@@ -49,6 +50,7 @@ app.use((req,res,next)=>{
 app.use('/users', usersRoutes);
 app.use('/books', booksRoutes);
 app.use('/reviews',reviewsRoutes);
+app.use('/admins',adminRoutes);
 
 app.use((req,res,next)=>{
     const error = new Error('Not found');

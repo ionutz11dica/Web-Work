@@ -29,7 +29,8 @@ import { NavbarComponent } from './features/navbar/navbar.component';
 import { EffectsModule } from '@ngrx/effects';
 import { SearchEffects } from './features/store/effects/search.effects';
 import { LoginComponent } from './features/login/login.component';
-import { fakeBackendProvider } from './helpers';
+import { MaterialModule } from 'src/app/material.module';
+// import { fakeBackendProvider } from './helpers';
 
 
 
@@ -57,12 +58,13 @@ import { fakeBackendProvider } from './helpers';
     FileUploadModule,
     InputTextModule,
     ReactiveFormsModule,
+    MaterialModule,
     EffectsModule.forRoot([SearchEffects]),
     StoreModule.forRoot({
       search: reducer
     })
   ],
-  providers: [ConfigService, fakeBackendProvider],
+  providers: [ConfigService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
