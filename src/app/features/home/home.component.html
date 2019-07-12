@@ -4,7 +4,7 @@
 <div class="tab-content" id="v-pills-tabContent">
     <app-search></app-search>
 </div> -->
-<div class="ui-g" *ngIf="books">
+<div class="ui-g p-5" *ngIf="books">
         <!-- $  | async -->
     <p-card *ngFor="let book of books"  class="ui-g-3 app-book-card"  [header]="book.title" [subheader]="book.authors" [style]="{width: '360px'}" styleClass="ui-card-shadow">
         <p-header>

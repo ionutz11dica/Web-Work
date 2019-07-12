@@ -13,3 +13,16 @@
 .download-button{
     width: 300px;
 }
+.app-details{
+    top: 70px;
+    position: relative;
+}
+.app-spinner{
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    margin-top: -4.05em;
+    width: 8em;
+    height: 8em;
+    font-size: 10px;
+}

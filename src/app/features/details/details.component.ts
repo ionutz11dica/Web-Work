@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit {
   bookData: any;
   donwloadUrl: any;
   bookTitle;
+  loading: boolean = true;
 
   constructor(private route: ActivatedRoute, private config: ConfigService,
               private fb: FormBuilder, private http: HttpClient) {    
@@ -50,6 +51,7 @@ export class DetailsComponent implements OnInit {
       }
       this.donwloadUrl = this.bookData.accessInfo.epub.downloadLink;
       this.bookTitle = this.bookData.volumeInfo.title;
+      this.loading = false;
       console.log(this.bookData)
     }); 
   }
