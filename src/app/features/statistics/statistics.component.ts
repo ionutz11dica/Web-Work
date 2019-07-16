@@ -36,7 +36,7 @@ export class StatisticsComponent implements OnInit {
         type: 'pie'
       },
       title: {
-        text: 'No of books downloaded'
+        text: 'No of downloaded books'
       },
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
