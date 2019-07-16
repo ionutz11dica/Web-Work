@@ -30,9 +30,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { SearchEffects } from './features/store/effects/search.effects';
 import { LoginComponent } from './features/login/login.component';
 import { MaterialModule } from 'src/app/material.module';
+import { BookListComponent } from './features/book-list/book-list.component';
+import { DeleteModalComponent } from './features/delete-modal/delete-modal.component';
 // import { fakeBackendProvider } from './helpers';
 
-
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { MaterialModule } from 'src/app/material.module';
     TruncatePipe,
     DetailsComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    BookListComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,
@@ -59,12 +63,14 @@ import { MaterialModule } from 'src/app/material.module';
     InputTextModule,
     ReactiveFormsModule,
     MaterialModule,
+    NgbModule,
     EffectsModule.forRoot([SearchEffects]),
     StoreModule.forRoot({
       search: reducer
     })
   ],
-  providers: [ConfigService],
-  bootstrap: [AppComponent]
+  providers: [ConfigService, NgbActiveModal],
+  bootstrap: [AppComponent],
+  entryComponents:[DeleteModalComponent]
 })
 export class AppModule { }

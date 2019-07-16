@@ -16,13 +16,20 @@
             <a class="nav-link" href="#/login">Login</a>
         </li>
         <li class="nav-item" *ngIf="loginVisible">
+            <a class="nav-link" href="#/books">Books</a>
+        </li>
+        <li class="nav-item" *ngIf="loginVisible">
             <a class="nav-link" (click)="logout()" style="cursor: pointer;">Logout</a>
         </li>
     </ul>
     </div>
-        
+    
+    <i class="pi pi-user text-info" *ngIf="loginVisible" style="font-size: 2em"></i>
+    <span class="text-info"  *ngIf="loginVisible" style="padding-right:10px">{{ userName }}</span>
+    
     <form class="form-inline" action="" autocomplete="on">
-        <input class="form-control mr-sm-2" name="search" type="search" placeholder="What're we looking for ?" [(ngModel)]="searchText" (keyup.enter)="keyUpEnter($event)">
+        <input class="form-control mr-sm-2" name="search" type="search" placeholder="What're we looking for ?" 
+               [(ngModel)]="searchText" (ngModelChange)="textEmpty()" (keyup.enter)="keyUpEnter($event)">
         <button class="btn btn-outline-info my-2 my-sm-0" type="submit" (click)="search(searchText)" >Search</button>
     </form>
 </nav>

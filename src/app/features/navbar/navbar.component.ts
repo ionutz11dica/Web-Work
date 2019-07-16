@@ -20,6 +20,8 @@ export class NavbarComponent implements OnInit {
   @ViewChild('menuItems') menu: MenuItem[];
   currentUser: any;
   loginVisible: boolean = false;
+  userName: string;
+  searchText: any;
 
   constructor ( private router: Router, private config: ConfigService,
                 private authenticationService: AuthenticationService, private store: Store<AppState>
@@ -40,6 +42,12 @@ export class NavbarComponent implements OnInit {
           } else {
             this.loginVisible = false;
           }
+          if(search.userData){
+            this.userName = search.userData;
+          }
+          if(search.searched){
+            this.router.navigate(['/'])
+          }
         }
       });
   }
@@ -58,7 +66,8 @@ export class NavbarComponent implements OnInit {
   keyUpEnter(event) {
     if(event.target.value) {
       this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
-    }else{
+    }else {
+      this.store.dispatch(new SearchActions.LoadBooksSearch());
       console.warn("null event target value");
     }
   }
@@ -66,8 +75,15 @@ export class NavbarComponent implements OnInit {
   search(query){
     if(query){
       this.store.dispatch(new SearchActions.KeyUpSearch(query));
-    }else{
+    }else {
+      this.store.dispatch(new SearchActions.LoadBooksSearch());
       console.warn("null event target value");
+    }
+  }
+
+  textEmpty(){
+    if(this.searchText == ""){
+      this.store.dispatch(new SearchActions.LoadBooksSearch());
     }
   }
 

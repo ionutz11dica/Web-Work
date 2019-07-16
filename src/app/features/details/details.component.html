@@ -4,7 +4,7 @@
     </div>
     <div class="row app-details" *ngIf="!loading">
         <div class="text-center col-6" *ngIf="bookData">
-            <img [src]="bookData.volumeInfo.imageLinks.medium" style="width:300px; height:300px;">
+            <img [src]="bookData.volumeInfo.imageLinks.thumbnail" style="width:300px; height:300px;">
             <br/>
             <br/>
             <p [innerHtml]="bookData.volumeInfo.description"></p>
@@ -37,6 +37,26 @@
                     </div>
                     <br/>
                     <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-file-text"></i></span>
+                        <input type="textarea" formControlName="description" pInputText placeholder="Description" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-list-alt"></i></span>
+                        <input type="text" formControlName="categories" pInputText placeholder="Categories" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" formControlName="publishedDate" pInputText placeholder="Published Date" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-paper-plane"></i></span>
+                        <input type="text" formControlName="publisher" pInputText placeholder="Publisher" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
                         <span class="ui-inputgroup-addon"><i class="fa fa-book"></i></span>
                         <input type="text" formControlName="isbn" pInputText placeholder="ISBN" class="text-input"/>
                     </div>
@@ -47,7 +67,7 @@
                         </a> 
                     </div>
                     <br/>
-                    <p-fileUpload mode="basic" name="epubFile" accept=".epub" [disabled]="!addBookForm.valid"
+                    <p-fileUpload mode="basic" name="epubFile" accept=".epub" [disabled]="!addBookForm.valid && loginVisible"
                             customUpload="true" (uploadHandler)="myUploader($event)" styleClass="file-upload">
                     </p-fileUpload>
                 </form>

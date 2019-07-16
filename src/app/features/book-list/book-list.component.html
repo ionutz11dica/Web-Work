@@ -1,0 +1,25 @@
+<div class="p-2">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Authors</th>
+        <th scope="col">Published Date</th>
+        <th scope="col">Publisher</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of books">
+        <th scope="row">{{item.title | titlecase}}</th>
+        <td>{{item.authors}}</td>
+        <td>{{item.publisher}}</td>
+        <td>{{item.publishedDate}}</td>
+        <!-- <a data-toggle="modal" [attr.data-target]="'#'+ item._id"></a> -->
+        <button class="btn btn-danger" (click)="delete(item._id,item.title)"><i class="fa fa-trash"></i></button>
+
+      </tr>
+      
+    </tbody>
+  </table>
+</div>

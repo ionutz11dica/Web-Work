@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
+require('dotenv').config({path: 'access_keys.env'})
 
 const Admin = require('../models/admins');
 
@@ -19,9 +21,11 @@ router.post("/authenticate", (req,res,next) => {
     Admin.findOne({username: username, password: password})
     .then(result => {
         if(result) {
+            console.log(result)
+            let tokenUser = jwt.sign({ username: result.username, password: result.password}, process.env.secret_jwt,{expiresIn: '24h'});
             res.status(200).json({
                 username: result.username,
-                token: 'fake-jwt-token'
+                token: tokenUser
             })
         } else {            
             res.status(404).json({message:'Username or password is incorrect'})

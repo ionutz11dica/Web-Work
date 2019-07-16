@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigService } from '../services/config.service';
 import { Book } from 'src/app/classes/book';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
+import { Store, select } from '@ngrx/store';
+import { AppState } from '../store/state/search.state';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-details',
@@ -19,15 +22,23 @@ export class DetailsComponent implements OnInit {
   donwloadUrl: any;
   bookTitle;
   loading: boolean = true;
+  loginVisible: boolean = false;
+  durationInSeconds = 5;
+  snackBarRef;
 
-  constructor(private route: ActivatedRoute, private config: ConfigService,
-              private fb: FormBuilder, private http: HttpClient) {    
+  constructor(private route: ActivatedRoute, private config: ConfigService, private router:  Router,
+              private fb: FormBuilder, private http: HttpClient, private store: Store<AppState>,
+              private _snackBar: MatSnackBar) {    
     this.addBookForm = this.fb.group({
       title: ['', [<any>Validators.required]],
       authors: ['', [<any>Validators.required]],
       pageCount: ['', [<any>Validators.required]],
       imageLink: ['', [<any>Validators.required]],
-      isbn: ['', [<any>Validators.required]]
+      isbn: ['', [<any>Validators.required]],
+      description: ['', [<any>Validators.required]],
+      categories: ['', [<any>Validators.required]],
+      publishedDate: ['', [<any>Validators.required]],
+      publisher: ['', [<any>Validators.required]]
     });
    }
 
@@ -39,8 +50,29 @@ export class DetailsComponent implements OnInit {
       this.addBookForm.controls["title"].setValue(this.bookData.volumeInfo.title);
       this.addBookForm.controls["authors"].setValue(this.bookData.volumeInfo.authors);
       this.addBookForm.controls["pageCount"].setValue(this.bookData.volumeInfo.pageCount);
-      this.addBookForm.controls["imageLink"].setValue(this.bookData.volumeInfo.imageLinks.medium);
-      this.addBookForm.controls["isbn"].setValue("");
+      if(this.bookData.volumeInfo.imageLinks.thumbnail){
+        this.addBookForm.controls["imageLink"].setValue(this.bookData.volumeInfo.imageLinks.thumbnail);
+      } else  if(this.bookData.volumeInfo.imageLinks.medium) {
+        this.addBookForm.controls["imageLink"].setValue(this.bookData.volumeInfo.imageLinks.medium);
+      }
+      if(this.bookData.volumeInfo.industryIdentifiers == undefined){        
+        this.addBookForm.controls["isbn"].setValue("other");
+      } else {
+        this.addBookForm.controls["description"].setValue(this.bookData.volumeInfo.industryIdentifiers[0]);
+      }
+      if(this.bookData.volumeInfo.description == undefined){        
+        this.addBookForm.controls["description"].setValue("This book does not have description.");
+      } else {
+        this.addBookForm.controls["description"].setValue(this.bookData.volumeInfo.description);
+      }
+
+      if(this.bookData.volumeInfo.categories == undefined){
+        this.addBookForm.controls["categories"].setValue("universal");
+      } else {
+        this.addBookForm.controls["categories"].setValue(this.bookData.volumeInfo.categories);
+      }
+      this.addBookForm.controls["publishedDate"].setValue(this.bookData.volumeInfo.publishedDate);
+      this.addBookForm.controls["publisher"].setValue(this.bookData.volumeInfo.publisher);
       if(this.bookData.volumeInfo.industryIdentifiers){
         var isbns = this.bookData.volumeInfo.industryIdentifiers;
         for(var i=0;i<isbns.length;i++){
@@ -54,6 +86,18 @@ export class DetailsComponent implements OnInit {
       this.loading = false;
       console.log(this.bookData)
     }); 
+    
+    this.store.pipe(select('search'))
+      .subscribe((search: any) => {
+        if(search) {
+          if(search.userLogged){
+            this.loginVisible = true;
+          }
+          if(search.searched){
+            this.router.navigate(['/'])
+          }
+        }
+      });
   }
 
   myUploader(event) {
@@ -65,10 +109,25 @@ export class DetailsComponent implements OnInit {
     formData.append('title', payload.title);
     formData.append('authors', payload.authors);
     formData.append('pageCount', payload.pageCount);
+    formData.append('imageLink', payload.imageLink);
     formData.append('isbn', payload.isbn);
+    formData.append('description', payload.description);
+    formData.append('categories', payload.categories);
+    formData.append('publishedDate', payload.publishedDate);
+    formData.append('publisher', payload.publisher);
     this.config.addBook1(formData)
     .subscribe(result => {
-      console.log(result)      
+      console.log(result);
+      if(result){        
+        this.openSnackBar(result.message, 'Dismiss');
+      }
+    },
+    error => {      
+      this.openSnackBar(error.error.message, 'Dismiss');
     });
+  }
+
+  openSnackBar(message,action) {
+    this.snackBarRef = this._snackBar.open(message, action, {duration: 10000, });
   }
 }

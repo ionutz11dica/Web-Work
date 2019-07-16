@@ -24,6 +24,8 @@ export class HomeComponent implements OnInit {
   initialState: boolean = false;
   bookAPI: Book[] = [];
   searchText : Observable<string> ;
+  loading: boolean = true;
+  logged: boolean = false;
 
   constructor(private config: ConfigService,
               private store: Store<AppState>) {
@@ -34,6 +36,7 @@ export class HomeComponent implements OnInit {
     .subscribe((data)=> {
       this.convertBook(data.items);
       this.books = this.bookAPI;
+      this.loading = false;
       this.initialState = true;
       this.store.dispatch(new SearchActions.LoadBooksSearch());
     });
@@ -41,6 +44,7 @@ export class HomeComponent implements OnInit {
   
   convertBook(data) {
     if(!this.initialState){
+      this.loading = false;
       this.bookAPI = [];
     }
     let srcImage;
@@ -87,11 +91,17 @@ export class HomeComponent implements OnInit {
     
     this.store.pipe(select('search'))
       .subscribe((search: any) => {
-        if(search && search.toString() !== "") {
-          this.initialState = false;
-          this.convertBook(search.books);
-          this.books = this.bookAPI;
+        if(search && search.toString() !== "" && search.searched) {
+          if(search.books){
+            this.loading = true;
+            this.initialState = false;
+            this.convertBook(search.books);
+            this.books = this.bookAPI;
+          }
         }
-      });
+        if(search && search.userLogged){
+          this.logged = true;
+        }
+    });
   }
 }

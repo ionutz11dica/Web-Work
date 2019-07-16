@@ -18,7 +18,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class ConfigService {
   private apiKey = environment.apiKey;
-  private maxResults = "&maxResults=40&startIndex=0"
+  private maxResults = "&maxResults=10&startIndex=0"
   currentUser;
   loginVisible: boolean = false;
   
@@ -36,14 +36,22 @@ export class ConfigService {
     }
 
   getSearch (searchQuery: string) : Observable<any> {
-    // return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + "&download=epub&filter=free-ebooks&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
-    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + "&download=epub&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
+    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + "&download=epub&filter=free-ebooks&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
+    // return this.http.get("https://www.googleapis.com/books/v1/volumes?q=" + searchQuery + "&download=epub&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
   }
   getBooks() : Observable<any> {
-    return this.http.get("https://www.googleapis.com/books/v1/volumes?q=a&download=epub&filter=free-ebooks&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
+    var items = ["potter", "austen", "brown", "colors", "games"]; 
+    var item = items[Math.floor(Math.random()*items.length)];
+    return this.http.get("https://www.googleapis.com/books/v1/volumes?q="+ item + "&download=epub&filter=free-ebooks&orderBy=relevance" + this.maxResults + "&key=" + this.apiKey);
   }
   addBook(book:Book, name): Observable<Book>{
-      return this.http.post<Book>("http://localhost:4000/books/addFile/" + name, book);
+    return this.http.post<Book>("http://localhost:4000/books/addFile/" + name, book);
+  }
+  deleteBook(id): Observable<any>{
+    return this.http.delete<any>("http://localhost:4000/books/" + id)
+  }
+  getBooksFromDb(): Observable<any>{
+      return this.http.get("http://localhost:4000/books/");
   }
   addBook1(formData): Observable<any>{
       return this.http.post<Book>("http://localhost:4000/books/addFile/", formData);

@@ -4,4 +4,5 @@ export interface AppState {
   readonly search: Book[];
   userLogged: boolean;
   userData: string;
+  searched: boolean;
 }

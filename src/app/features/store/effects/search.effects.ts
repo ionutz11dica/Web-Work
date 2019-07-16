@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { EMPTY } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { ConfigService } from '../../services/config.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class SearchEffects {
@@ -31,14 +32,10 @@ export class SearchEffects {
           catchError(() => EMPTY)
         )
       )
-      // mergeMap((action) => this.searchService.getSearch(
-      //   action.payload.searchQuery
-      // ))
-      // .map(payload => this.searchService.getSearch(payload))
     );
  
   constructor(
     private actions$: Actions,
-    private searchService: ConfigService
+    private searchService: ConfigService,
   ) {}
 }
