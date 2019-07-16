@@ -4,12 +4,14 @@ import { DetailsComponent } from './features/details/details.component';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
 import { BookListComponent } from './features/book-list/book-list.component';
+import { StatisticsComponent } from './features/statistics/statistics.component';
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
   { path: 'details', component: DetailsComponent },
+  { path: 'statistics', component: StatisticsComponent },
   { path: 'books', component: BookListComponent },
   { path: 'details/:id', component: DetailsComponent },
   { path: '**', redirectTo: '' }

@@ -35,6 +35,9 @@ import { DeleteModalComponent } from './features/delete-modal/delete-modal.compo
 // import { fakeBackendProvider } from './helpers';
 
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { StatisticsComponent } from './features/statistics/statistics.component';
+import { ChartModule } from 'angular-highcharts';
+
 
 
 @NgModule({
@@ -48,7 +51,8 @@ import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     NavbarComponent,
     LoginComponent,
     BookListComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +67,7 @@ import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     InputTextModule,
     ReactiveFormsModule,
     MaterialModule,
+    ChartModule,
     NgbModule,
     EffectsModule.forRoot([SearchEffects]),
     StoreModule.forRoot({
