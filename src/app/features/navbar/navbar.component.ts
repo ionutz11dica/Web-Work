@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
   loginVisible: boolean = false;
   userName: string;
   searchText: any;
+  isCollapsed = false;
 
   constructor ( private router: Router, private config: ConfigService,
                 private authenticationService: AuthenticationService, private store: Store<AppState>
@@ -30,6 +31,7 @@ export class NavbarComponent implements OnInit {
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
       if(this.currentUser){
         this.loginVisible = true;
+        this.userName = (JSON.parse(localStorage.currentUser)).username;
       }
      }
 
@@ -65,25 +67,20 @@ export class NavbarComponent implements OnInit {
   
   keyUpEnter(event) {
     if(event.target.value) {
-      this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
-    }else {
-      this.store.dispatch(new SearchActions.LoadBooksSearch());
-      console.warn("null event target value");
+      this.router.navigateByUrl("/search/" + event.target.value);
+      // this.store.dispatch(new SearchActions.KeyUpSearch(event.target.value));
     }
   }
 
   search(query){
     if(query){
-      this.store.dispatch(new SearchActions.KeyUpSearch(query));
-    }else {
-      this.store.dispatch(new SearchActions.LoadBooksSearch());
-      console.warn("null event target value");
+      this.router.navigate(["/search/" + query]);
     }
   }
 
   textEmpty(){
     if(this.searchText == ""){
-      this.store.dispatch(new SearchActions.LoadBooksSearch());
+      // this.store.dispatch(new SearchActions.LoadBooksSearch());
     }
   }
 

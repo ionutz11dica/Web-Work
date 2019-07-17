@@ -18,6 +18,9 @@
     font-size: 10px;
 }
 .home-details{
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
     margin-bottom: 65px!important;
 }
 ::ng-deep .app-book-card > .ui-card .ui-card-body .ui-card-footer{

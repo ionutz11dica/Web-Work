@@ -87,7 +87,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getInitialState();
-    // this.books$ = this.store.pipe(select('search'));
     
     this.store.pipe(select('search'))
       .subscribe((search: any) => {

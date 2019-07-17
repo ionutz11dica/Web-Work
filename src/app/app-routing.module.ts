@@ -5,6 +5,7 @@ import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
 import { BookListComponent } from './features/book-list/book-list.component';
 import { StatisticsComponent } from './features/statistics/statistics.component';
+import { SearchComponent } from './features/search/search.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'details', component: DetailsComponent },
   { path: 'statistics', component: StatisticsComponent },
   { path: 'books', component: BookListComponent },
+  { path: 'search/:query', component: SearchComponent },
   { path: 'details/:id', component: DetailsComponent },
   { path: '**', redirectTo: '' }
 ];

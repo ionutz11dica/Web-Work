@@ -18,13 +18,13 @@
         <td>{{item.publisher}}</td>
         <td>{{item.publishedDate}}</td>
         <!-- <a data-toggle="modal" [attr.data-target]="'#'+ item._id"></a> -->
-        <button class="btn btn-danger" (click)="delete(item._id,item.title);"><i class="fa fa-trash"></i></button>
+        <button class="btn btn-danger" style="margin: 5px;" (click)="delete(item._id,item.title);"><i class="fa fa-trash"></i></button>
       </tr>
     </tbody>
     <ngb-pagination class="app-paginator"
       [(page)]="page"
       [pageSize]="pageSize"
-      [collectionSize]="books.length"
+      [collectionSize]="paginatorLen"
       (pageChange)="loadPage($event)">
     </ngb-pagination>
   </table>

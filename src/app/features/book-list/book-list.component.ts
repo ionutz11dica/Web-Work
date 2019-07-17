@@ -50,15 +50,6 @@ export class BookListComponent implements OnInit {
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
-      this.loadData();
     }
-  }
-
-  loadData() {
-    this.books.query({
-      page: this.page - 1,
-      size: this.paginatorLen,
-    }).subscribe(
-    )
   }
 }
