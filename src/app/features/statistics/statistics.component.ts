@@ -9,9 +9,13 @@ import { ConfigService } from '../services/config.service';
 })
 export class StatisticsComponent implements OnInit {
 
-  chart;
+  pieChart;
+  barChart;
   totalBooks = 0;
   chartData;
+  categories = [];
+  categoriesByBook = {};
+  dataCategories = [];
   constructor(private config: ConfigService) { }
 
   ngOnInit() {
@@ -25,8 +29,29 @@ export class StatisticsComponent implements OnInit {
           this.totalBooks += element.noDownloads;
           this.chartData.push({name: element.title, y: element.noDownloads ? element.noDownloads : 0})
         }
+        this.categories.push(...element.categories);
       });
-      this.createChart();
+      //remove duplicate
+      this.categories = this.categories.filter(function(elem, index, self) {
+        return index === self.indexOf(elem);
+      })
+
+      this.categories.forEach((elem,idx)=>{
+        this.categoriesByBook[elem] = 0;
+        this.dataCategories[idx] = 0;
+      })
+      result.forEach((element, index) => {
+        element.categories.forEach((elem,idx)=>{
+          if(this.categories.includes(elem)){
+            this.categoriesByBook[elem] ++;
+          }
+        })
+      });
+      
+      this.categories = Object.keys(this.categoriesByBook);
+      this.dataCategories = Object.values(this.categoriesByBook);
+      this.createPieChart();
+      this.createBarChart();
     })
   }
 
@@ -42,8 +67,8 @@ export class StatisticsComponent implements OnInit {
     return 0;
   }
 
-  createChart(){
-    this.chart = new Chart({
+  createPieChart(){
+    this.pieChart = new Chart({
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -78,5 +103,27 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  createBarChart(){
+    this.barChart = new Chart({
+      title: {
+        text: 'Books per categories'
+    },
+
+    subtitle: {
+        text: 'Plain'
+    },
+
+    xAxis: {
+        categories: this.categories
+    },
+
+    series: [{
+        type: 'column',
+        colorByPoint: true,
+        data: this.dataCategories,
+        showInLegend: false
+    }]
+    })
+  }
 
 }
