@@ -19,12 +19,27 @@ export class StatisticsComponent implements OnInit {
     this.config.getBooksFromDb()
     .subscribe(result => {
       console.log(result);
-      result.forEach(element => {
-        this.totalBooks += element.noDownloads;
-        this.chartData.push({name: element.title, y: element.noDownloads ? element.noDownloads : 0})
+      result.sort(this.compare);
+      result.forEach((element,idx) => {
+        if(idx <= 6){
+          this.totalBooks += element.noDownloads;
+          this.chartData.push({name: element.title, y: element.noDownloads ? element.noDownloads : 0})
+        }
       });
       this.createChart();
     })
+  }
+
+  compare( a, b ) {
+    if(a.noDownloads == undefined) a.noDownloads = 0;
+    if(b.noDownloads == undefined) b.noDownloads = 0;
+    if ( a.noDownloads < b.noDownloads ){
+      return 1;
+    }
+    if ( a.noDownloads > b.noDownloads ){
+      return -1;
+    }
+    return 0;
   }
 
   createChart(){
@@ -36,7 +51,7 @@ export class StatisticsComponent implements OnInit {
         type: 'pie'
       },
       title: {
-        text: 'No of downloaded books'
+        text: 'Top 7 most downloaded books'
       },
       tooltip: {
         pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -59,36 +74,6 @@ export class StatisticsComponent implements OnInit {
         type: "pie",
         colorByPoint: true,
         data: this.chartData
-        // data: [{
-        //   name: 'Chrome',
-        //   y: 61.41,
-        //   sliced: true,
-        //   selected: true
-        // }, {
-        //   name: 'Internet Explorer',
-        //   y: 11.84
-        // }, {
-        //   name: 'Firefox',
-        //   y: 10.85
-        // }, {
-        //   name: 'Edge',
-        //   y: 4.67
-        // }, {
-        //   name: 'Safari',
-        //   y: 4.18
-        // }, {
-        //   name: 'Sogou Explorer',
-        //   y: 1.64
-        // }, {
-        //   name: 'Opera',
-        //   y: 1.6
-        // }, {
-        //   name: 'QQ',
-        //   y: 1.2
-        // }, {
-        //   name: 'Other',
-        //   y: 2.61
-        // }]
       }]
     });
   }
