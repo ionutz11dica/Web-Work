@@ -38,7 +38,7 @@ export class DeleteModalComponent implements OnInit {
         this.activeModal.close();
         this.bookDeleted.emit(true);
       }),
-      error => this.openSnackBar(error.error.message,'Dismiss')
+      error => this.openSnackBar(error.error.message,'Dismiss');
   }
 
 }
