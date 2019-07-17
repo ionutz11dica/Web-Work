@@ -71,8 +71,16 @@ export class DetailsComponent implements OnInit {
       } else {
         this.addBookForm.controls["categories"].setValue(this.bookData.volumeInfo.categories);
       }
-      this.addBookForm.controls["publishedDate"].setValue(this.bookData.volumeInfo.publishedDate);
-      this.addBookForm.controls["publisher"].setValue(this.bookData.volumeInfo.publisher);
+      if(this.bookData.volumeInfo.publishedDate){
+        this.addBookForm.controls["publishedDate"].setValue(this.bookData.volumeInfo.publishedDate);
+      } else {
+        this.addBookForm.controls["publishedDate"].setValue("No published date");
+      }
+      if(this.bookData.volumeInfo.publisher){
+        this.addBookForm.controls["publisher"].setValue(this.bookData.volumeInfo.publisher);
+      } else {
+        this.addBookForm.controls["publisher"].setValue("No publisher");
+      }
       if(this.bookData.volumeInfo.industryIdentifiers){
         var isbns = this.bookData.volumeInfo.industryIdentifiers;
         for(var i=0;i<isbns.length;i++){

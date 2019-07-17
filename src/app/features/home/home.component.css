@@ -17,6 +17,9 @@
     height: 8em;
     font-size: 10px;
 }
+.home-details{
+    margin-bottom: 65px!important;
+}
 ::ng-deep .app-book-card > .ui-card .ui-card-body .ui-card-footer{
     text-align: center!important;
 }
