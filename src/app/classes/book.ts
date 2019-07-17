@@ -1,6 +1,7 @@
 export interface Book {
+    id: string,
     title: string;
-    authors: Array<string>;
+    authors: Array<string> ;
     pageCount:number;
     description:string;
     publisher:string;
@@ -11,6 +12,7 @@ export interface Book {
     isAvailableEpub: boolean;
     downloadLink: string;
     categories: Array<string>;
+    isbn: string;
     // identifiers:{
     //  isbn_13:string,
     //  isbn_10:string

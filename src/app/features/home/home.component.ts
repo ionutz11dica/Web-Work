@@ -20,57 +20,87 @@ export class HomeComponent implements OnInit {
 
   booksQuery: string = "Harry Potter";
   books$: Observable<Book[]>;
-  // books: Book[];
+  books: any;
+  initialState: boolean = false;
   bookAPI: Book[] = [];
   searchText : Observable<string> ;
+  loading: boolean = true;
+  logged: boolean = false;
 
   constructor(private config: ConfigService,
               private store: Store<AppState>) {
   }
 
-  getInitialState(): void {  
+  getInitialState(): void {
     this.config.getBooks()
     .subscribe((data)=> {
-      console.log(data.items.length)
-      console.log(data.items)
-      let srcImage;
-      for(let i = 0; i < data.items.length; i++) {
-          if(data.items[i].volumeInfo.imageLinks){
-            if(data.items[i].volumeInfo.imageLinks.thumbnail && data.items[i].volumeInfo.imageLinks.thumbnail.includes("zoom=1")) {
-              srcImage = data.items[i].volumeInfo.imageLinks.thumbnail.replace("zoom=1", "zoom=0");
-            }
-          } else {
-              srcImage = "https://islandpress.org/sites/default/files/400px%20x%20600px-r01BookNotPictured.jpg";
-            }
-          this.bookAPI.push({
-            title: data.items[i].volumeInfo.title,
-            authors: data.items[i].volumeInfo.authors,
-            description: data.items[i].volumeInfo.description,
-            pageCount: data.items[i].volumeInfo.pageCount,
-            publisher: data.items[i].volumeInfo.publisher,
-            publishedDate: data.items[i].volumeInfo.publishedDate,
-            imageLink: srcImage,
-            isEbook: data.items[i].saleInfo.isEbook,
-            publicDomain: data.items[i].accessInfo.publicDomain,
-            isAvailableEpub: data.items[i].accessInfo.epub.isAvailable,
-            downloadLink:data.items[i].accessInfo.epub.downloadLink,
-            categories: data.items[i].volumeInfo.categories
-           
-          });
-        }
-      this.store.dispatch(new SearchActions.InitialStateSearch(this.bookAPI));
-      this.books$ = this.store.select('search');
+      this.convertBook(data.items);
+      this.books = this.bookAPI;
+      this.loading = false;
+      this.initialState = true;
+      this.store.dispatch(new SearchActions.LoadBooksSearch());
     });
+  }
+  
+  convertBook(data) {
+    if(!this.initialState){
+      this.loading = false;
+      this.bookAPI = [];
+    }
+    let srcImage;
+    for(let i = 0; i < data.length; i++) {
+      if(data[i].volumeInfo) {
+        if(data[i].volumeInfo.imageLinks){
+          if(data[i].volumeInfo.imageLinks.thumbnail && data[i].volumeInfo.imageLinks.thumbnail.includes("zoom=1")) {
+            srcImage = data[i].volumeInfo.imageLinks.thumbnail.replace("zoom=1", "zoom=0");
+          }
+        } else {
+            srcImage = "https://islandpress.org/sites/default/files/400px%20x%20600px-r01BookNotPictured.jpg";
+        }
+        this.bookAPI.push({
+          id: data[i].id,
+          title: data[i].volumeInfo.title,
+          authors: data[i].volumeInfo.authors,
+          description: data[i].volumeInfo.description,
+          pageCount: data[i].volumeInfo.pageCount,
+          publisher: data[i].volumeInfo.publisher,
+          publishedDate: data[i].volumeInfo.publishedDate,
+          imageLink: srcImage,
+          isEbook: data[i].saleInfo.isEbook,
+          publicDomain: data[i].accessInfo.publicDomain,
+          isAvailableEpub: data[i].accessInfo.epub.isAvailable,
+          downloadLink:data[i].accessInfo.epub.downloadLink,
+          categories: data[i].volumeInfo.categories,
+          isbn: data[i].volumeInfo.industryIdentifiers ? data[i].volumeInfo.industryIdentifiers[0].identifier : ""
+        });
+      } else 
+        break;
+    }
   }
 
   saveBook(book): void {
     console.log(book)
-    this.config.addBook(book).subscribe(result=>{
+    this.config.addBook(book,null).subscribe(result=>{
       console.log(JSON.stringify(result))
     });
   }
+
   ngOnInit() {
     this.getInitialState();
-
+    
+    this.store.pipe(select('search'))
+      .subscribe((search: any) => {
+        if(search && search.toString() !== "" && search.searched) {
+          if(search.books){
+            this.loading = true;
+            this.initialState = false;
+            this.convertBook(search.books);
+            this.books = this.bookAPI;
+          }
+        }
+        if(search && search.userLogged){
+          this.logged = true;
+        }
+    });
   }
 }

@@ -20,6 +20,8 @@ const userSchema = new Schema({
       },
     password: {type:String},
     books:[{type: mongoose.Schema.Types.ObjectId, ref:'Book'}],
+    wantToRead:[{type: mongoose.Schema.Types.ObjectId, ref:'Book'}],
+    backup:[{type: mongoose.Schema.Types.ObjectId}]
 },{versionKey:false})
 
 module.exports = mongoose.model('User',userSchema,'users')

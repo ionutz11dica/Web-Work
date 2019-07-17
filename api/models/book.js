@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const random = require('mongoose-simple-random');
 const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({
@@ -15,10 +15,14 @@ const bookSchema = new Schema({
     isAvalibleEpub: {type: Boolean},
     downloadLink:{type: String},
     categories: [{type:String}],
-    reviews: [String],
+    reviews: [{type:Number}],
+    noDownloads: {type:Number},
+    isbn:{type:String},
     fileID:{
         type: mongoose.Schema.Types.ObjectId,
     }
+   
+    
     // identifiers:{
     //  isbn_13:{type:String},
     //  isbn_10:{type:String}
@@ -26,5 +30,5 @@ const bookSchema = new Schema({
     //language
     
 },{versionKey:false})
-
+bookSchema.plugin(random);
 module.exports = mongoose.model('Book',bookSchema,'books')

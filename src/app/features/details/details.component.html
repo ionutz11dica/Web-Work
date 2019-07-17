@@ -1,3 +1,79 @@
-<p>
-  details works!
-</p>
+<div class="container" style="padding-bottom: 130px;">
+    <div class="spinner-border text-info app-spinner" *ngIf="loading" style="width: 4rem; height: 4rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row app-details" *ngIf="!loading">        
+        <div class="text-center col-6 detail-container">
+            <div class="container detail-form">
+                <h3 class="row">Add "{{bookTitle}}" book into database </h3>
+                <form class="row justify-content-center" #form="ngForm" [formGroup]="addBookForm" enctype="multipart/form-data">
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-book"></i></span>   
+                        <input type="text" formControlName="title" pInputText  placeholder="Title" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-users"></i></span> 
+                        <input type="text" formControlName="authors" pInputText placeholder="Authors" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-file"></i></span> 
+                        <input type="text" formControlName="pageCount" pInputText placeholder="Page Count" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <a target="_blank" [href]="donwloadUrl">
+                            <span class="ui-inputgroup-addon"><i class="fa fa-picture-o"></i></span>
+                        </a> 
+                        <input type="text" formControlName="imageLink" pInputText placeholder="Image link" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-file-text"></i></span>
+                        <input type="textarea" formControlName="description" pInputText placeholder="Description" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-list-alt"></i></span>
+                        <input type="text" formControlName="categories" pInputText placeholder="Categories" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-calendar"></i></span>
+                        <input type="text" formControlName="publishedDate" pInputText placeholder="Published Date" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-paper-plane"></i></span>
+                        <input type="text" formControlName="publisher" pInputText placeholder="Publisher" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="ui-inputgroup p-2">
+                        <span class="ui-inputgroup-addon"><i class="fa fa-book"></i></span>
+                        <input type="text" formControlName="isbn" pInputText placeholder="ISBN" class="text-input"/>
+                    </div>
+                    <br/>
+                    <div class="download-button p-2">
+                        <a target="_blank" [href]="donwloadUrl">
+                            <button pButton type="button" label="Download Epub"></button>
+                        </a> 
+                    </div>
+                    <br/>
+                    <p-fileUpload mode="basic" name="epubFile" accept=".epub" [disabled]="!addBookForm.valid && loginVisible"
+                            customUpload="true" (uploadHandler)="myUploader($event)" styleClass="file-upload">
+                    </p-fileUpload>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center col-6" *ngIf="bookData">
+            <img [src]="bookData.volumeInfo.imageLinks.thumbnail" style="width:300px; height:300px;">
+            <br/>
+            <br/>
+            <p [innerHtml]="bookData.volumeInfo.description ? bookData.volumeInfo.description : bookTitle "></p>
+        </div>
+    </div>
+        
+</div>
+

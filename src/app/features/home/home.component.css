@@ -1,0 +1,38 @@
+::ng-deep .app-book-card > .ui-card .ui-card-body .ui-card-title {
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical; 
+    /* autoprefixer: on */
+    display: block;
+    display: -webkit-box !important;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+}
+.app-spinner{
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    margin-top: -4.05em;
+    width: 8em;
+    height: 8em;
+    font-size: 10px;
+}
+.home-details{
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 65px!important;
+}
+::ng-deep .app-book-card > .ui-card .ui-card-body .ui-card-footer{
+    text-align: center!important;
+}
+::ng-deep .app-book-card > .ui-card .ui-card-body p-footer .ui-button-success{
+    color: #ffffff;
+    background-color: #17a2b8;
+    border: 1px solid #17a2b8;
+}
+::ng-deep .app-book-card > .ui-card .ui-card-body p-footer .ui-button-success:hover {
+    color: #fff;
+    background-color: #138496;
+    border-color: #117a8b;
+}
