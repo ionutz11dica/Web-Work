@@ -1,0 +1,12 @@
+.app-paginator{
+    position: absolute;
+    bottom: 55px!important;
+}
+
+::ng-deep .app-paginator .page-item.active .page-link  {    
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+::ng-deep .app-paginator .page-link  {
+    color: #17a2b8;
+}
